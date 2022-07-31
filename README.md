@@ -2,7 +2,7 @@
 <img src="https://raw.githubusercontent.com/andriusluz/ameli-ai/main/ameliai_logo.png.png" width="100" height="100">
 
 # Ameli-AI
-</p<
+</p>
 *NOT READY FOR PRODUCTION/DAILY USE*
 
 Welcome to Ameli-AI, a simple, beginner friendly but very ambitious voice assistant
