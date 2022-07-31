@@ -1,6 +1,6 @@
 
 
-![Logo](https://github.com/andriusluz/ameli-ai/blob/main/ameliai_logo.png.png?raw=true|height="200")
+![Logo](https://github.com/andriusluz/ameli-ai/blob/main/ameliai_logo.png.png?raw=true|height="100")
 
 
 # Ameli-AI
