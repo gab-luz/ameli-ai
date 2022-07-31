@@ -1,7 +1,7 @@
 
 
 ![Logo](https://github.com/andriusluz/ameli-ai/blob/main/ameliai_logo.png.png?raw=true|height="100")
-<img src="[https://your-image-url.type](https://github.com/andriusluz/ameli-ai/blob/main/ameliai_logo.png.png?raw=true)" height="100">
+<img src="[[https://your-image-url.type](https://github.com/andriusluz/ameli-ai/blob/main/ameliai_logo.png.png?raw=true)](https://github.com/andriusluz/ameli-ai/blob/main/ameliai_logo.png.png?raw=true)" width="100" height="100">
 
 # Ameli-AI
 
