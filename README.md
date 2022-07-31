@@ -24,6 +24,7 @@ Built with love and python3.10
 - Integration with Google APIs like Google Calendar and Google Contacts
 - WhatsApp Integration
 - Multilingual (partially for now)
+- StopDepression module (first voice assistant with this feature)
 
 ## Installation
 
