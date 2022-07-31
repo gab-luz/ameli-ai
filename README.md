@@ -31,6 +31,7 @@ Built with love and python3.10
 Install with git
 
 ```bash
+  sudo apt-get install python-dbus (debian/ubuntu) or brew install dbus (in macosx)
   git clone https://github.com/andriusluz/ameli-ai
   cd ameli-ai
   pipenv install
