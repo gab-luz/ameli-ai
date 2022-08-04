@@ -30,7 +30,7 @@ Based on Knick-AI
 
 ## Installation
 
-Install with git
+Install on linux with git:
 
 ```bash
 sudo apt-get install python-dbus
