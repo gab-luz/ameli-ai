@@ -33,10 +33,25 @@ Based on Knick-AI
 Install with git
 
 ```bash
-  sudo apt-get install python-dbus (debian/ubuntu) or brew install dbus (in macosx)
-  git clone https://github.com/andriusluz/ameli-ai
-  cd ameli-ai
-  pipenv install
+sudo apt-get install python-dbus
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.0
+asdf=/home/$USER/.asdf/bin/asdf
+asdf update
+asdf install python 3.10.5
+asdf global python 3.10.5
+asdf reshim python 3.10.5
+pip install pipenv
+asdf reshim python 3.10.5
+asdf global python 3.10.5
+git clone https://github.com/andriusluz/ameli-ai
+cd ameli-ai
+pipenv install
+```
+How to run:
+
+```bash
+pipenv shell
+python main.py
 ```
     
 ## Roadmap
