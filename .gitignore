@@ -126,6 +126,7 @@ ext/__pycache__
 ext/minigames
 ext/notifier_extractors
 .vscode/
+persist.py
 testpool.py
 testpool.ipynb
 videoplayer.py
