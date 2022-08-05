@@ -53,7 +53,29 @@ How to run:
 pipenv shell
 python main.py
 ```
-    
+
+Install on windows using scoop (check website https://scoop.sh):
+```bash
+(inside ameli-ai's folder)
+Install on windows using scoop (check website https://scoop.sh):
+(inside ameli-ai's folder)
+scoop install git
+scoop bucket add main
+scoop install pyenv
+pyenv install 3.10.5
+pyenv global 3.10.5
+python -m pip install pipenv
+scoop reshim
+pipenv install
+```
+
+Finally, to run:
+```bash
+pipenv shell
+python main.py
+```
+**BEWARE WITH BUGS. YES, YOU'LL FIND A LOT OF THEM **
+   
 ## Roadmap
 
 - Localization support (Weblate) - WIP
@@ -63,5 +85,5 @@ python main.py
 - Simple integration with IBM Watson and Amazon Polly for neural voices support - WIP
 ## Authors
 
-- [@andriusluz](https://github.com/andriusluz)
+- [@gab-luz](https://github.com/gab-luz)
 
