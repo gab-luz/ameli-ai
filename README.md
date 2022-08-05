@@ -53,7 +53,27 @@ How to run:
 pipenv shell
 python main.py
 ```
-    
+```bash
+Install on windows using scoop (check website https://scoop.sh):
+(inside ameli-ai's folder)
+Install on windows using scoop (check website https://scoop.sh):
+(inside ameli-ai's folder)
+scoop install git
+scoop bucket add main
+scoop install pyenv
+pyenv install 3.10.5
+pyenv global 3.10.5
+python -m pip install pipenv
+scoop reshim
+pipenv install
+```
+
+Finally, to run:
+```bash
+python main.py
+```
+**BEWARE WITH BUGS. YES, YOU'LL FIND A LOT OF THEM **
+   
 ## Roadmap
 
 - Localization support (Weblate) - WIP
