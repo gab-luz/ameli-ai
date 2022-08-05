@@ -85,5 +85,5 @@ python main.py
 - Simple integration with IBM Watson and Amazon Polly for neural voices support - WIP
 ## Authors
 
-- [@andriusluz](https://github.com/andriusluz)
+- [@gab-luz](https://github.com/gab-luz)
 
