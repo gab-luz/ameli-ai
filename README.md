@@ -53,8 +53,9 @@ How to run:
 pipenv shell
 python main.py
 ```
-```bash
+
 Install on windows using scoop (check website https://scoop.sh):
+```bash
 (inside ameli-ai's folder)
 Install on windows using scoop (check website https://scoop.sh):
 (inside ameli-ai's folder)
