@@ -1,0 +1,191 @@
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# tokens, credentials etc
+ext/credentials.json
+ext/token_gcontacts.json
+ext/token.json
+ext/__pycache__
+
+# not ready extensions
+*.png
+*.jpeg
+*.jpg
+*.db
+*.txt
+ext/action_screenshot.py
+ext/affirmations.py
+ext/amazfit.py
+ext/amazon-polly.py
+ext/animated_cli.py
+ext/anime_ext.py
+ext/bra_cep.py
+ext/bra_covid19.py
+ext/bra_dic_michaelis.py
+ext/bra_expresso.py
+ext/bra_feriados.py
+ext/bra_fipe.py
+ext/catfacts.py
+ext/check_sentiment.py
+ext/console.py
+ext/contacts.py
+ext/credentials.json
+ext/crypto.py
+ext/dict.py
+ext/emby.py
+ext/eng_dic_longman.py
+ext/finance.py
+ext/gfit.py
+ext/gmail.py
+ext/google_calendar.py
+ext/google_contacts.py
+ext/home_assistant.py
+ext/horoscope.py
+ext/ibm_watson.py
+ext/insultme.py
+ext/intel.py
+ext/ios-notifications.py
+ext/kdeconnect.py
+ext/kodi.py
+ext/lg_tv.py
+ext/libretranslate.py
+ext/liverecorder.py
+ext/lofi_girl.py
+ext/medreminder.py
+ext/miband.py
+ext/mytomato.py
+ext/navigation_lnx.py
+ext/navigation_win.py
+ext/nettools.py
+ext/nofap.py
+ext/noporn.py
+ext/notifier.py
+ext/persona.py
+ext/plex.py
+ext/podcast.py
+ext/presencepy.py
+ext/pricetracker.py
+ext/reddit.py
+ext/religion_christian.py
+ext/religion_jewish.py
+ext/religion_muslim.py
+ext/reminder.py
+ext/spotipy.py
+ext/ssh_command.py
+ext/stopDepression.py
+ext/stopDisorders.py
+ext/stt_vosk.py
+ext/switch_wallpaper.py
+ext/talktome.py
+ext/teaisdone.py
+ext/themoviedb.py
+ext/ticktick.py
+ext/todoist.py
+ext/torrent_deluge.py
+ext/translate_api.py
+ext/tvmovienotifer.py
+ext/tvs_lg.py
+ext/tvs_samsung.py
+ext/tvs_sony.py
+ext/tweetpy.py
+ext/wakeword.py
+ext/yourStats.py
+ext/youtube.py
+voice.mp3
+vosk_models/
+personas/
+kv/
+ext/minigames
+ext/__pycache__
+ext/minigames
+ext/notifier_extractors
+.vscode/
+testpool.py
+testpool.ipynb
+videoplayer.py
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   install all needed dependencies.
+Pipfile.lock
+assistente_desktop.code-workspace
+ideas.txt
+app.py
+main_kivymd.py
+KnickAI/
+RHVoice/
+fonts/
+kv/
+voices/
+vosk/
+.vscode/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Databases
+userdata.db
+
+# Translations
+*.mo
+*.pot
+
