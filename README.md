@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/andriusluz/ameli-ai/main/ameliai_logo.png.png" width="100" height="100">
+<img src="https://raw.githubusercontent.com/gab-luz/ameli-ai/main/ameliai_logo.png" width="100" height="100">
 
 # Ameli-AI
 </p>
