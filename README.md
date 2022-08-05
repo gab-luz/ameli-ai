@@ -19,13 +19,9 @@ Based on Knick-AI
 - Vosk and pytssx3 for offline speech recognition
 - Online text-to-speech with GoogleTTS
 - Offline text-to-speech with RHVoice (Brazilian-Portuguese, Russian and Ukrainian voices)
-- GUI available in KivyMD
 - Cross platform
 - Customizable Wake-word (like "OK Google" or "Hey Siri") support
 - Integration with Google APIs like Google Calendar and Google Contacts
-- WhatsApp Integration
-- Multilingual (partially for now)
-- StopDepression module (first voice assistant with this feature)
 - Replaced keyboard module (used by Knick-AI) with pynput
 
 ## Installation
@@ -77,12 +73,15 @@ python main.py
 **BEWARE WITH BUGS. YES, YOU'LL FIND A LOT OF THEM **
    
 ## Roadmap
-
+- GUI available in KivyMD - WIP
 - Localization support (Weblate) - WIP
 - TickTick and TodoIst integration - WIP
 - A dockerized server appliance
-- MusicBrainz support to get current playing music title
+- MusicBrainz support to get current playing music title - WIP
 - Simple integration with IBM Watson and Amazon Polly for neural voices support - WIP
+- WhatsApp Integration - WIP
+- Multilingual (partially for now) - WIP
+- StopDepression module (first voice assistant with this feature) - WIP
 ## Authors
 
 - [@gab-luz](https://github.com/gab-luz)
