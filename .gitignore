@@ -83,8 +83,6 @@ ext/mytomato.py
 ext/navigation_lnx.py
 ext/navigation_win.py
 ext/nettools.py
-ext/nofap.py
-ext/noporn.py
 ext/notifier.py
 ext/persona.py
 ext/plex.py
