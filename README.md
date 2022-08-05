@@ -71,6 +71,7 @@ pipenv install
 
 Finally, to run:
 ```bash
+pipenv shell
 python main.py
 ```
 **BEWARE WITH BUGS. YES, YOU'LL FIND A LOT OF THEM **
