@@ -29,7 +29,7 @@ Based on Knick-AI
 Install on linux with git:
 
 ```bash
-sudo apt-get install python-dbus
+sudo apt-get install python-dbus libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-3.0
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.0
 asdf=/home/$USER/.asdf/bin/asdf
 asdf update
