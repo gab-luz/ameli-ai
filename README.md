@@ -28,7 +28,7 @@ Based on Knick-AI
 ## Commands implemented so far 
 | Feature  | Description| Linux  | Windows  | macosx  |
 |---|---|---|---|---|
-| WakeWord  | Enables you use your own customized hotword like "OK Google" or "Hey Siri" | X  | X  |X|
+| WakeWord  | Enables you to use your own customized hotword like "OK Google" or "Hey Siri" | X  | X  |X|
 | AppFinder  | Lets you find your installed apps and perform actions with them.  | X  | Partial  |Partial|
 | GoogleTTS (online text-to-speech) | Use Google's TTS Engine. Check supported languages. | X  | X  |X|
 | RHVoice (offline text-to-speech)  |  Use RHVoice TTS Engine. Check supported languages. | In progress  |   ||
