@@ -28,12 +28,7 @@ def get_audio():
 
         try:
             said = r.recognize_google(audio, language='en-US') # you can change lang here
-            #said = r.recognize_google(audio, language='pt-BR')
             print(said)
         except Exception as e:
             print(f"Exception: {str(e)}")
     return said
-
-#speak('Olá Gab')
-
-#text = get_audio()

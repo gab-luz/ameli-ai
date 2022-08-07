@@ -1,5 +1,6 @@
+import requests
 from sys import platform
-from googletts_voice import *
+from googletts_voice import speak, get_audio
 from datetime import datetime
 import webbrowser
 from dialogue import *
@@ -17,9 +18,23 @@ import json
 import subprocess
 from main import start_from_hibernation
 from rich import print as rprint
-from wakeword import background_listening
+from wakeword import background_listening, work_in_background
+from constants import *
+import git
+import time
+import arrow #https://arrow.readthedocs.io/en/latest/
 
+#preferences [will be stored in userdata.db]
 you = 'Sir'
+maps_provider = 'googlemaps'
+news_url="https://news.google.com/news/rss"
+your_lang = 'en-US'
+api_key_unsplash = ''
+api_key_spotify = ''
+
+
+g = git.cmd.Git(os.getcwd())
+
 #tts_rhvoice('Tudo bem? O que você precisa?','letícia-f123')
 # text = get_audio().lower()
 
@@ -43,7 +58,7 @@ you = 'Sir'
 #             note_text = get_audio().lower()
 #             note(note_text)
 
-def ameliResponse(audio):
+def ameli_response(audio):
     print(audio)
     for line in audio.splitlines():
         os.system(f"say {audio}")
@@ -58,31 +73,27 @@ print(any_random(hi))
 '''
             
 def showmagic():
-    #knick_input_mode= mode_select() # not planning to use text mode on Ameli
     #didn't remove it, just in case
     while True:
-        #playsound.playsound(os.path.join('media\sfx',"howcanihelpyounow.mp3"))
-        #print("\nTell Me How Can I Help you Now ?")
         ask=any_random(asking)
         print("\n",ask)
         speak(ask+".")
-        #statement=take_input(knick_input_mode)
         statement=get_audio().lower()
 
         if statement==None:
             print("No Input Detected!\n")
             continue
-        elif "good bye" in statement or "ok bye" in statement or "stop" in statement or "bye" in statement or "quit" in statement:
+ 
+        elif "good bye" in statement or "ok bye" in statement or "bye" in statement or "quit" in statement:
             print("\n")
-            print('    Your Personal Assistant Knick is Shutting Down,Good bye.     ')
-            print("~   The BOT went Offline    ~")
+            print('    Your Personal Assistant Ameli is shutting down, goodbye.     ')
+            speak('Your Personal Assistant Ameli is shutting down, goodbye.')
             time.sleep(4)
-            cleaner()
             quit()
         
         elif "pause" in statement or "please pause" in statement:
-            speak("Assistant Paused.")
-            print("ok I am paused\nPress 'W' whenever You Want Me to Resume")
+            speak("Assistant paused.")
+            print("OK. I am paused.\nPress 'W' whenever You Want Me to Resume")
             print("  ")
             from console import assistant_pause,assistant_resumed
             print(assistant_pause)
@@ -99,37 +110,57 @@ def showmagic():
                     
                     showmagic()
                 
-                # with keyboard.Events() as events:
-                #     for event in events:
-                #         if event.key == keyboard.Key.w:
-                #             speak("Assistant Resumed.")
-                #             print(assistant_resumed)
-                #             print("  ")
-                #             #break
-                #               continue
-        
-        elif "hibernate" in statement or "sleep" in statement: #note this feature only works if there is a mic connected. 
-            speak("Hibernating.")
-            print("please use the wakeword to wake me up, till then i'll be going undercover.")
-            print("Available Wake Words :\n1.Assistant activate\n2.wake up assistant")
-            time.sleep(2)
-            subprocess.call('start scripts/Hotword/hotword_detection.pyw', shell=True)
-            time.sleep(0.5)
-            quit() #when this part of the code worked,beleive me... it was cool as Af.
-
-        elif statement in ["no thanks","no","not now","leave me alone"]:
+        elif statement in ["no thanks","no","not now","leave me alone","shut up","stay quiet","sleep","hibernate"]:
             speak("OK, I will sleep for some time then.")
             print("OK, I will sleep for some time then.")
-            print("\nuse the wakeword to awake me, till then I'll be going undercover.")
-            time.sleep(2)
-            subprocess.call('python wakeword.py', shell=True)
-            quit()
+            speak("Use the wakeword to awake me, till then I'll be silent.")
+            print("Use the wakeword to awake me, till then I'll be silent.")
+            print("If you want to know the wake words available, say Yes.")
+            speak("If you want to know the wake words available, say Yes.")
+            wakeword_confirmation = get_audio()
+            if wakeword_confirmation == 'yes':
+                print("OK. I'll tell you the available wake words, honey.")
+                speak("OK. I'll tell you the available wake words, honey.")
+                for custom_wakeword in hotwords:
+                    speak(custom_wakeword)
+                    print(custom_wakeword)
+            else:
+                time.sleep(2)
+                work_in_background()
+                quit()
 
         elif "hi"==statement or "hello" in statement :
-            hello_greating=any_random(hello)
-            print(hello_greating,"\n(NOTE:if you wanna have chat with me. just use the 'Lets Chat' command)")
-            speak(hello_greating)
+            hello_greeting=any_random(hello)
+            print(hello_greeting,"\n(NOTE:if you wanna have chat with me. just use the 'Lets Chat' command)")
+            speak(hello_greeting)
             time.sleep(1)
+            
+        elif statement in ['stop music', 'stop media','stop podcast']:
+            if platform == 'win32':
+                import win32api
+                VK_MEDIA_PLAY_PAUSE = 0xB3
+                stop_media_win = win32api.MapVirtualKey(VK_MEDIA_PLAY_PAUSE, 0)
+                win32api.keybd_event(VK_MEDIA_PLAY_PAUSE, stop_media_win)
+                print('OK. Media has been stopped.')
+                speak('OK. Media has been stopped.')
+            elif platform in ['linux','linux2']:
+                subprocess.call('playerctl --all-players stop',shell=True)
+                print('OK. Media has been stopped.')
+                speak('OK. Media has been stopped.')
+                time.sleep(2)
+            else:
+                print('Not implemented yet.')
+                speak('Not implemented yet.')
+                
+                            
+        elif "open netflix" in statement:
+                print('OK. Opening Netflix...')
+                speak('Ok. Opening Netflix...')
+                webbrowser.open_new_tab("https://www.netflix.com")
+                time.sleep(3)
+                print("OK. Netflix is open now.")
+                speak('OK. Netflix is open now.')
+                    
 
         elif "open youtube and search for" in statement or "open youtube and search" in statement:
                 query=statement.split('open youtube and search for')
@@ -161,9 +192,14 @@ def showmagic():
             time.sleep(5)
 
         elif "snipping tool" in statement:
-            print("Opening Snipping Tool")
-            os.system("start snippingtool")
-            time.sleep(5)
+            if platform == 'win32':
+                speak("Opening Snipping Tool")
+                print("Opening Snipping Tool")
+                os.system("start snippingtool")
+                time.sleep(5)
+            else:
+                speak("The snipping tool is available only for Windows Users. \
+                      I'm sorry, but I can't open it.")
 
         elif "screenshot" in statement:
             import random
@@ -171,7 +207,7 @@ def showmagic():
             import pyscreenshot
             image = pyscreenshot.grab()
             r = random.randint(1,20000000)
-            file_name=("knickscreenshot"+ str(r) +".png")
+            file_name=("ameliscreenshot"+ str(r) +".png")
             image.save(file_name)
             print("Screenshot saved as : ",file_name)
             speak(f'OK. The screenshot was saved as: {file_name}')
@@ -184,7 +220,8 @@ def showmagic():
                 if platform in ['linux','linux2']:
                     call(['xdg-open',file_name])
                 if platform == 'darwin':
-                    print('Ameli is not supported in macOs yet. Sorry.')
+                    print('Ameli is not fully supported in macOs yet. Sorry.')
+                    speak('Ameli is not fully supported in macOs yet. Sorry.')
                 if platform == 'win32':
                     subp.call(file_name, shell=True)
             elif "no" in scrnshot_image:
@@ -200,7 +237,7 @@ def showmagic():
 
         elif "image conversion" in statement :
             ima=input("Enter the Path of Image :")
-            pywhatkit.image_to_ascii_art(imgpath=ima,output_file="knick_asciiart.txt")
+            pywhatkit.image_to_ascii_art(imgpath=ima,output_file="ameli_asciiart.txt")
             print("i have Made Your ASCII art and also saved it.")
             time.sleep(3)
 
@@ -265,12 +302,10 @@ def showmagic():
 
         elif "open my inbox" in statement:
             webbrowser.open_new_tab("https://mail.google.com/mail/u/0/#inbox")
-            playsound._playsoundWin(os.path.join('media\sfx',"taskcompleted.mp3"))
             time.sleep(3)
 
         elif "open my sent mails" in statement or "open my sent mail" in statement:
             webbrowser.open_new_tab("https://mail.google.com/mail/u/0/#sent")
-            playsound._playsoundWin(os.path.join('media\sfx',"taskcompleted.mp3"))
             time.sleep(3)
 
         elif 'open terminal' in statement or 'cmd' in statement or 'open console' in statement:
@@ -282,10 +317,31 @@ def showmagic():
                     subprocess.call('gnome-terminal', shell=True)
                     speak("Terminal is open")
             if platform == 'darwin':
-                print('Not implemented yet')
-            print("Command Prompt is Open Now")
-            speak("Terminal is open")
-            time.sleep(3)
+                print('Not implemented yet. Please open an issue about it.')
+                speak("Not implemented yet. Please open an issue about it.")
+            else:
+                os.system('cmd')
+                print("Command prompt is open Now")
+                speak("Terminal is open")
+                time.sleep(3)
+                
+        elif statement in ("the weekday","the day of the week"):
+            today_date = arrow.utcnow()
+            day_week = str(today_date.format('dddd'))
+            print(f"Today is {day_week}")
+            speak(f"Today is {day_week}")
+
+        elif statement in ("tell me day","what day is today","tell me the date"):
+            today_date = arrow.utcnow()
+            day_day = str(today_date.format('MMMM DD, YYYY'))
+            print(f"Today is {day_day}")
+            speak(f"Today is {day_day}")
+            
+        elif statement in ('tell me the year'):
+            a = arrow.utcnow()
+            year_time = str(a.year)
+            speak(f"We\'re in {year_time}.")
+            print(f"We\'re in {year_time}.")
 
         elif 'log off' in statement or 'sign out' in statement:
             subprocess.call(["shutdown", "/l"])
@@ -333,14 +389,13 @@ def showmagic():
                     pass
             else:
                 print(_platform)
-                speak("you should press enter if any dialog box appears.")
+                speak("I'm trying to empty your recycle in. Press enter if any dialog box appears.")
                 time.sleep(1.3)
-                speak("Recycle Bin Emptied")
+                speak("Recycle bin now empty.")
                 
         elif "note" in statement or "remember this" in  statement:
                 print("What would you like me to write down?")
                 speak("What would you like me to write down?")
-                note_text = take_input(knick_input_mode)
                 note(note_text)
                 print("I have made a note of that.\n")
 
@@ -351,9 +406,7 @@ def showmagic():
                 break
             else:                                      #}
                 base_url="https://api.openweathermap.org/data/2.5/weather?"
-                playsound._playsoundWin(os.path.join('media\sfx',"cityname.mp3"))
                 print("\nwhats the city?")
-                city_name= take_input(knick_input_mode)
                 complete_url=base_url+"appid="+weather_api_key+"&q="+city_name     #weather_api_key is the api key here
                 response = requests.get(complete_url)
                 x=response.json()
@@ -361,9 +414,7 @@ def showmagic():
                     y=x["main"]
                     current_temperature = y["temp"]
                     current_humidiy = y["humidity"]
-                    z = x["weather"]
-                    weather_description = z[0]["description"]
-                    
+                    weather_description = (x["weather"])[0]["description"]
                     print(" Temperature in kelvin unit = " +
                         str(current_temperature) +
                         "\nhumidity (in percentage) = " +
@@ -378,8 +429,8 @@ def showmagic():
                         str(weather_description))
 
                 else:
-                    speak(" City Not Found. ")
-                    print(" City Not Found ")
+                    speak(" Location not found. ")
+                    print(" Location not found ")
 
         elif "search on google" in statement:
                 statement = statement.split("search on google")
@@ -403,7 +454,6 @@ def showmagic():
                 break
             else:
                 speak("I can answer to computational and geographical questions and what question do you want to ask now")
-                query=take_input(knick_input_mode)
                 client = wolframalpha.Client(wolfram_api_key) #API KEY REQUIRED HERE
                 res = client.query(query)
                 answer = next(res.results).text
@@ -428,19 +478,19 @@ def showmagic():
             photo = parsed_json['urls']['full']
             urllib.urlretrieve(photo, folder_wallpapers) # Location where we download the image to.
             subprocess.call(["killall Dock"], shell=True)
-            ameliResponse('wallpaper changed successfully')
+            ameli_response('wallpaper changed successfully')
             
         # elif 'tell me a joke' in statement:
 
         #elif 'suggest me a movie' in statement:
             
-        elif 'I\'m bored' in statement:
+        elif "I'm bored" in statement:
             bored_api = requests.get('https://www.boredapi.com/api/activity', verify=False)
             bored_api_activity = bored_api.json()
             print(bored_api_activity['activity'])
             speak(bored_api_activity['activity'])
         
-        elif 'wikipedia' in statement:
+        elif statement in ['wikipedia','who is ','what is ','who was ']:
             speak("Searching Wikipedia about it...")
             statement =statement.replace("search on wikipedia about", "")
             try:
@@ -449,59 +499,42 @@ def showmagic():
                 print(results)
                 speak(results)
             except:
-                speak("Unknown Error Occured, say your question again.")
+                speak("Unable to fetch date. Ask me maybe another time. I'm really sorry.")
                 continue
             
         # build a screen recorder here
         
-        elif 'who is' in statement:
-            try:
-                speak("getting information from Wikipedia..")
-                statement =statement.replace("who is","")
-                results = wikipedia.summary(statement, sentences=3)
-                speak("According to Wikipedia")
-                print(results)
-                speak(results)
-            except:
-                speak("Enable to Fetch Data,try again.")
-                continue
-        
-        elif "what time is it" in statement:
+        elif statement in ["what time is it"]:
             time_now = datetime.today().strftime("%H:%M %p")
             speak(f"Well, it's {time_now}")
             print("Current Time =", time_now)
 
         elif 'news for today' in statement or 'tell me the news' in statement or 'read the news please' in statement:
             try:
-                news_url="https://news.google.com/news/rss" # you must allow user to choose a different source
                 Client=urlopen(news_url)
                 xml_page=Client.read()
                 Client.close()
                 soup_page=soup(xml_page,"xml")
                 news_list=soup_page.findAll("item")
                 for news in news_list[:15]:
-                    ameliResponse(news.title.text.encode('utf-8'))
+                    ameli_response(news.title.text.encode('utf-8'))
             except Exception as e:
                 print(e)
 
         elif 'where is' in  statement:
             ind = statement.split().index("is")
             location = statement[ind + 8:]
-            url = "https://www.google.com/maps/place/" + "".join(location)
-            speak("This is where i found, " + str(location))
+            if maps_provider == 'googlemaps':
+                url = "https://www.google.com/maps/place/" + "".join(location)
+            else:
+                url = "https://www.openstreetmap.org/search?query=" + "".join(location)
+            speak("This is where I found, " + str(location))
             webbrowser.open(url)    
-            
             time.sleep(3)
 
         elif 'yt studio' in statement or 'open yt studio' in statement or 'open youtube studio' in statement:
             webbrowser.open_new_tab("https://studio.youtube.com/")
             speak("opening youtube creator studio")
-            
-            time.sleep(5)
-
-        elif 'live studio' in statement or 'livestream dashboard' in statement or 'live control room' in statement:
-            webbrowser.open_new_tab('https://studio.youtube.com/channel/UCWe1CSEpVq_u6WDk3F7E2Mg/livestreaming/manage')
-            speak("opening youtube livestream dashboard")
             
             time.sleep(5)
 
@@ -516,13 +549,7 @@ def showmagic():
                 print("OPENING GOOGLE TRENDS : Cancelled By User")
             
             time.sleep(5)
-
-        elif 'viewbot' in statement or 'livebot' in statement or 'view bot' in statement:
-            playsound._playsoundWin(os.path.join('media\sfx','startingviewbot.mp3'))
-            print("if you get any error in the viewbot or it doesn't work try updating the Assistant or \n vist the official website of knick assistant & check the ViewBot Page.")
-            subprocess.call('viewbot\livebot.exe')
-            time.sleep(3)
-                
+              
         elif 'how were you born' in statement  or 'why were you born' in statement:
             print('''
             I was born on june 2021 by A Boy Who Had an Ambition To Change This World with the
@@ -531,31 +558,43 @@ def showmagic():
             time.sleep(3)
         
         elif 'who are you' in statement or 'what can you do' in statement:
-            print('I am Knick your Persoanl AI assistant. I am programmed for managing normal tasks in your Life')
-            speak("I am Knick your Persoanl AI assistant. I am programmed for managing normal tasks in your Life")
+            print('I am Ameli, your Personal AI assistant. I am programmed for managing normal tasks in your life')
+            speak("I am Ameli, your Personal AI assistant. I am programmed for managing normal tasks in your life")
             time.sleep(3)
 
         elif 'your name' in statement or 'what is your name' in statement :
-            speak("my name is knick, how could you forget me :-(")
-            print('my name is knick your A.I assistant')
+            speak("my name is Ameli, how could you forget me :-(")
+            print('my name is Ameli your A.I assistant')
             print(" (ㆆ_ㆆ) "*3)
             time.sleep(3)
 
         elif 'what is your slogan' in statement or 'what is your motive' in statement:
-            playsound._playsoundWin(os.path.join('media\sfx','slogan.mp3'))
-            print('Leading Towards A Efficient Life.')
+            print('Leading towards a efficient life.')
             time.sleep(3)
         
         elif "who made you" in statement or "who created you" in statement or "who discovered you" in statement:
-            speak("I was built by my great all mighty master, Arsh")
-            print("I was built by Arsh")
+            print("I was built by Mr. Gab, based on Knick-AI, made originally by Arsh.")
+            speak("I was built by Mr. Gab, based on Knick-AI, made originally by Arsh.")
             time.sleep(2)
 
-        elif 'update knick' in statement or 'knick website' in statement:
-            speak("opening The Official Website For Knick Assistant.")
-            webbrowser.open_new_tab("https://knickassistant.wordpress.com/")
-            speak("please manually check for any new Available verson.")
-            time.sleep(4)
+        elif 'update ameli' in statement or 'update yourself' in statement:
+            speak("Are you sure about it? \
+                  Updating myself can be very dangerous. \
+                  I suggest you check my webpage first. \
+                  Say Yes for updating or No to stop.")
+            update_yes_no=get_audio().lower()
+            time.sleep(2)
+            if "yes" in update_yes_no:
+                print("OK. I'm updating myself.")
+                speak("OK. I'm updating myself.")
+                g.pull()
+                if "up-to-date" in g.pull():
+                    print("Ameli-AI already updated.")
+                    speak("Ameli-AI already updated.")
+                time.sleep(4)
+            else:
+                print("OK. Maybe another time.")
+                speak("OK. Maybe another time.")
 
         elif 'tell commands' in statement or 'your commands' in statement  or 'command' in statement:
             speak("Telling you the list of my commands :")
@@ -567,7 +606,6 @@ def showmagic():
         
         elif 'chat' in statement: 
             #print('\nChat Feature is Still in ALPHA vesion,\nso please have patience while using it.')
-            chat(knick_input_mode)
             from console import bug
             print(bug)
             time.sleep(3)
@@ -580,11 +618,14 @@ def showmagic():
 
         elif 'insult me' in statement:
             try:
+                evil=''
                 evil=requests.get(url='https://evilinsult.com/generate_insult.php?lang=en&type=json')
                 data=evil.json()
                 insult=data['insult']
                 print(insult)
                 speak(insult)
+                print('This insult was done by evilinsult.com, not by us.')
+                speak('This insult was done by evilinsult.com, not by us.')
                 time.sleep(2)
             except:
                 print("the insult generation server is down,you may try again later.")
@@ -595,7 +636,6 @@ def showmagic():
             time.sleep(0.5)
             keyboard.press_and_release('win+H')
             time.sleep(0.5)
-            playsound._playsoundWin(os.path.join('media\sfx','done.wav'))
             continue
 
         elif 'say' in statement or 'pronounce' in statement:
@@ -614,7 +654,7 @@ def showmagic():
             print(reply_to_thanks)
             speak(reply_to_thanks)
             
-        elif statement in {"depressed","I'm depressed","I\'m very depressed"}:
+        elif statement in {"depressed","I'm depressed","I'm very depressed"}:
             speak("Oh. Do you want to talk about it? I’m here when you’re ready.")
             depressed_audio=get_audio().lower()
             time.sleep(2)
@@ -629,29 +669,14 @@ def showmagic():
                     pywhatkit.playonyt('9qDfg041D20')
                     time.sleep(3)
                     print("youtube is open now.")
-                    playsound._playsoundWin(os.path.join('media\sfx',"taskcompleted.mp3"))
                     time.sleep(5)
                 else:
                     speak("Oh, I see. Please get some help. Okay?")
             elif "no" in depressed_audio:
                 speak('Oh, I see. Please get some help. Okay?')
             time.sleep(2)
-            
-
-        elif "support assistance" in statement:
-            speak("you can join the official discord server of knick, if you have any problem while using the assistant.")
-            query=input("do you want to join the Discord Server for Assistance? (y/n)\n>> ")
-            if query=="y":
-                webbrowser.open_new_tab("https://discord.gg/2X4WThB64b")
-                continue
-            elif query=="n":
-                print("ok : action cancelled by user")
-                continue
-            else:
-                print("you need to select from 'y' or 'n' only, IDOT!")
-                continue
-        
-        elif statement in ["focus","help me focus please","I can\t focus"]:
+                 
+        elif statement in ("focus","help me focus please","I can't focus"):
             speak("Oh, I see. There's a lot of ways I can help you focusing \
                 on your tasks. For instance, if you want to minimize all your \
                 windows and get absolute focus on your tasks, you can say \
@@ -663,6 +688,18 @@ def showmagic():
                 you just have to say Lofi Girl. \
                 So tell me what will be your choice for now {you}. \
                 ")
+        elif statement in ("lofi girl", "lo-fi girl","low-fi girl"):
+            speak("OK. Opening Lofi Girl's livestream")
+            webbrowser.open('https://www.youtube.com/watch?v=jfKfPfyJRdk')
+            
+        elif statement in ("pomodoro timer"):
+            print("OK. Opening Pomofocus, a very good pomodoro timer. \
+                Add the task you want to focus on, allow notifications \
+                and click on START. It should help you focus on your taks.")
+            speak("OK. Opening Pomofocus, a very good pomodoro timer. \
+                Add the task you want to focus on, allow notifications \
+                and click on START. It should help you focus on your taks.")
+            webbrowser.open("https://pomofocus.io/")
             
         #elif "help me choose a movie"
         #elif "open netflix"
@@ -677,9 +714,9 @@ def showmagic():
         #          w.minimize()
         #    
         else:
-            print('Unable to Read Your Command\nError: Unknown Command')
+            print('Unable to read your command\nError: Unknown command')
             speak('Sorry. I wasn\'t able to read your command.\
-                  Say Hey Ameli in case you need anything. \
+                  Say Hey Ameli, in case you need anything. \
                   I\'ll always be here for you.')
             time.sleep(2)
             

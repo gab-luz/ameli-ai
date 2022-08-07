@@ -51,6 +51,7 @@ ext/bra_dic_michaelis.py
 ext/bra_expresso.py
 ext/bra_feriados.py
 ext/bra_fipe.py
+ext/bra_pricetracker.py
 ext/catfacts.py
 ext/check_sentiment.py
 ext/console.py
@@ -66,6 +67,7 @@ ext/gmail.py
 ext/google_calendar.py
 ext/google_contacts.py
 ext/home_assistant.py
+ext/humanized_datetime.py
 ext/horoscope.py
 ext/ibm_watson.py
 ext/insultme.py
@@ -96,6 +98,7 @@ ext/religion_christian.py
 ext/religion_jewish.py
 ext/religion_muslim.py
 ext/reminder.py
+ext/speedtest.py
 ext/spotipy.py
 ext/ssh_command.py
 ext/stopDepression.py
@@ -117,6 +120,7 @@ ext/tweetpy.py
 ext/wakeword.py
 ext/yourStats.py
 ext/youtube.py
+ext/maps/osm.py
 voice.mp3
 vosk_models/
 personas/
@@ -125,11 +129,15 @@ ext/minigames
 ext/__pycache__
 ext/minigames
 ext/notifier_extractors
+monitors/
 .vscode/
 persist.py
+setup.py
 testpool.py
 testpool.ipynb
 videoplayer.py
+cli.py
+watcher.py
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

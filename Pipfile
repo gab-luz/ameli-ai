@@ -43,6 +43,11 @@ pytest-playwright = "*"
 dbus-python = "*"
 urllib3 = "*"
 pynput = "*"
+click = "*"
+setuptools = "*"
+gitpython = "*"
+arrow = "*"
+geocoder = "*"
 
 [dev-packages]
 

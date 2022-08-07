@@ -7,32 +7,18 @@ from sys import platform
 from ext.console import intro_header
 from googletts_voice import speak
 import notify2
+import constants
 
 def assistant_introduction():
     print(intro_header)
     time.sleep(2)
-# def notify(message):
-#     if platform in ['linux','linux2']:
-#         subprocess.Popen([f"notify-send 'Ameli-AI' {message}", shell := True])
-#     if platform == 'win32':
-#         from win10toast import ToastNotifier
-#         # create an object to ToastNotifier class
-#         n = ToastNotifier()
-#         n.show_toast("Ameli-AI", {message}, duration = 10)
-#     if platform == 'darwin':
-#         host_va = 'Ameli-AI'
-#         subprocess.Popen([f"osascript -e \'display notification {message} with title \"{host_va}\"'", shell := True])
 
-# notify2.init('app name')
-# n = notify2.Notification('title', 'message')
-# n.show()
-
-def notifyAmeli(message):
+def notify_ameli(message):
     notify2.init('Ameli-AI')
     n = notify2.Notification('Ameli-AI', message)
     n.show()
     
-def takeCommand():     
+def take_command():     
 		print("Listening.....")
 		r = sr.Recognizer()
 		r.dynamic_energy_threshold=False
@@ -48,28 +34,25 @@ def takeCommand():
 			print(f"You Said : {said}\n")
 		except sr.UnknownValueError :
 			print("could not understand audio \n ~Trying Again~")
-			return takeCommand()
+			return take_command()
 		except sr.RequestError as e:
 			print("Could not request results, check your internet connection; {0}".format(e))
 			return "None"
 
 		return said.lower()
 
-def wishMe():
+def wish_me():
     from datetoday import datetime
-    hour=datetime.datetime.now().hour
-    if hour>=0 and hour<12:
-        print("\n")
-        print("Hello,Good Morning")
-        speak('Hello. Good morning')
-    elif hour>=12 and hour<18:
-        print("\n")
-        print("Hello,Good Afternoon")
-        speak("Hello,Good Afternoon")
+    hour = datetime.datetime.now().hour
+    if hour >= 0 and hour < 12:
+        print("Hello, good morning")
+        speak("Hello, good morning")
+    elif hour >= 12 and hour < 18:
+        print("Hello, good afternoon")
+        speak("Hello, good afternoon")
     else:
-        print("\n")
-        print("Hello,Good Evening")
-        speak("Hello,Good Evening")
+        print("Hello, good evening")
+        speak("Hello, good evening")
 
 def note(text):
     from datetoday import datetime
@@ -87,15 +70,6 @@ USAGE for any_random(var) :
 hi=["Hello","Hi","Hey","Howdy","Hola","Bonjour"]
 print(any_random(hi))
 '''
-def desktop_notification(text_for_notification,duration_of_notification):
-    # import win10toast
-    if platform == 'win32':
-        from win10toast import ToastNotifier
-        # create an object to ToastNotifier class
-        n = ToastNotifier()
-        n.show_toast("Ameli-AI",text_for_notification, duration = duration_of_notification)
-    else:
-        print('Not implemented yet.')
 
 def cleaner():
     if os.path.exists("pywhatkit_dbs.txt"):
