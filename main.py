@@ -35,7 +35,6 @@ from app.ui.utils import discover_anime_art
 
 KV = """
 #:import dp kivy.metrics.dp
-#:import FadeTransition kivy.uix.screenmanager.FadeTransition
 
 <NavigationBar@BoxLayout>:
     size_hint_y: None
