@@ -296,7 +296,6 @@ KV = """
                 spacing: dp(16)
 
 <RootManager>:
-    transition: FadeTransition(duration=0.25)
     HomeScreen:
     ChatScreen:
     IntegrationsScreen:
@@ -328,7 +327,9 @@ class IntegrationsScreen(Screen):
 
 
 class RootManager(ScreenManager):
-    pass
+    def __init__(self, **kwargs) -> None:
+        kwargs.setdefault("transition", FadeTransition(duration=0.25))
+        super().__init__(**kwargs)
 
 
 class AmeliAIApp(App):
