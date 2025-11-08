@@ -12,6 +12,19 @@ Our goal is to run Ameli-AI in multiple devices such Linux, Windows, macOs, Andr
 Built with love and python3.10
 Based on Knick-AI
 
+## Project renaissance
+
+Ameli-AI now ships with a cross-platform Kivy experience inspired by voice-first devices like Alexa and the anime aesthetic of the Miru player. The interface ships with:
+
+- A cinematic home dashboard featuring animated/anime artwork placeholders.
+- Integrated status panels for Home Assistant, Nextcloud and Grocy with asynchronous connection management.
+- A conversational cockpit that can route prompts to OpenRouter, OpenAI, ElevenLabs or locally hosted LLaMA-family models.
+- Speech orchestration hooks for Whisper (tiny), Kokoro TTS, Piper and platform built-ins.
+- VRM avatar registry placeholders so Vtuber-style companions can join the UI.
+- Responsive layouts that scale from mobile (Android/iOS) to desktop (Windows, Linux, macOS).
+
+Set the appropriate environment variables (for example `HOME_ASSISTANT_URL`, `HOME_ASSISTANT_TOKEN`, `NEXTCLOUD_URL`, `NEXTCLOUD_USERNAME`, `NEXTCLOUD_PASSWORD`, `GROCY_URL`, `GROCY_API_KEY`, `OPENROUTER_API_KEY`, `OPENAI_API_KEY`, `ELEVENLABS_API_KEY`, `LLAMA_LOCAL_MODEL`) before launching to enable live integrations.
+
 ## Features
 
 - Cross platform (currently linux and partial windows support)
