@@ -5,6 +5,12 @@ import os
 from pathlib import Path
 from typing import Optional
 
+os.environ.setdefault("KIVY_CLIPBOARD", "sdl2")
+
+from kivy.config import Config
+
+Config.set("kivy", "clipboard", "sdl2")
+
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.core.window import Window
@@ -57,10 +63,7 @@ KV = """
     font_size: '16sp'
     bold: True
 
-<IntegrationStatusItem@BoxLayout>:
-    title: ''
-    status: ''
-    is_online: False
+<IntegrationStatusItem>:
     orientation: 'vertical'
     size_hint_y: None
     height: dp(96)
@@ -91,10 +94,11 @@ KV = """
 
 <ChatBubble>:
     size_hint_y: None
-    height: self.minimum_height + dp(12)
+    height: self.ids.bubble_box.minimum_height + dp(12)
     anchor_x: 'right' if root.is_user else 'left'
     padding: dp(6), dp(6)
     BoxLayout:
+        id: bubble_box
         orientation: 'vertical'
         size_hint: None, None
         width: min(dp(540), root.width * 0.8)
@@ -300,6 +304,14 @@ KV = """
     ChatScreen:
     IntegrationsScreen:
 """
+
+
+class IntegrationStatusItem(BoxLayout):
+    """Integration status card shown on the home and integrations screens."""
+
+    title = StringProperty("")
+    status = StringProperty("")
+    is_online = BooleanProperty(False)
 
 
 class ChatBubble(AnchorLayout):
